@@ -53,23 +53,11 @@ The most important design decision: outputs are calibrated to the customer's act
 
 ## Architecture
 
-```
-┌──────────────────────────────────────────┐
-│           React Frontend (Vercel)         │
-│  Upload → Configure → Generate → Review  │
-└─────────────────┬────────────────────────┘
-                  │
-┌─────────────────▼────────────────────────┐
-│      Vercel Serverless Functions          │
-│  /api/anthropic → Claude API proxy        │
-│  Rate limiting, cost tracking, auth check │
-└──────────┬───────────────┬───────────────┘
-           │               │
-┌──────────▼──────┐ ┌──────▼──────────────┐
-│  Anthropic API  │ │   Supabase Postgres  │
-│  Claude Sonnet  │ │  Auth, transcripts,  │
-│  Prompt caching │ │  usage logs, history │
-└─────────────────┘ └─────────────────────┘
+```mermaid
+flowchart TD
+    A["React Frontend\nVercel\nUpload · Configure · Generate · Review"] --> B["Vercel Serverless Functions\n/api/anthropic — Claude API proxy\nRate limiting · Cost tracking · Auth"]
+    B --> C["Anthropic API\nClaude Sonnet\nPrompt caching"]
+    B --> D["Supabase Postgres\nAuth · Transcripts\nUsage logs · History"]
 ```
 
 ---
